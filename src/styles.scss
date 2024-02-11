@@ -10,6 +10,16 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+:root {
+  --button-background-primary: #652CD1;
+  --button-border: #845EEE;
+  --background-color: #121826;
+  --card-background: #212936;
+  --button-background-secondary: #394150;
+  --card-border-color: #4D5562;
+  --font-color-secondary: #A1A1A9;
+  --font-color-primary: #E5E7EB;
+}
 
 .fieldset {
   border: none;
