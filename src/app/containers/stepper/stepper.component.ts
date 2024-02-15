@@ -80,12 +80,12 @@ import {JsonPipe, NgForOf} from '@angular/common';
                 <ng-container *ngFor="let topic of topics.controls; let i = index">
                   <fieldset class="toggle-button_fieldset">
                     <label class="toggle-button_label body-text">
-                      <!--style="display: none"-->
                     <input
+                      style="display: none"
                       type="checkbox"
                       [formControlName]="i"
-                      value="topicsArray[i]"
-                      [class.selected]="false"
+                      [value]="topicsArray[i]"
+                      [checked]="topicsArray[i]"
                     >
                       {{topicsArray[i]}}
                     </label>
@@ -147,6 +147,7 @@ export class StepperComponent {
 
   next() {
     console.log(this.form.value);
+    console.log(this.form.controls['topics'].value);
     // this.step++;
   }
 

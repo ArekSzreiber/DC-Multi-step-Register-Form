@@ -70,6 +70,12 @@ body {
   opacity: 1;
 }
 
+.toggle-button_label:has(input:checked) {
+  background-color: var(--button-background-primary);
+  color: var(--font-color-primary);
+  border-color: var(--button-border);
+}
+
 .heading {
   font-size: 20px;
 }
