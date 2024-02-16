@@ -6,7 +6,7 @@ import {
   FormGroup,
   FormsModule,
   NonNullableFormBuilder,
-  ReactiveFormsModule,
+  ReactiveFormsModule, ValidationErrors, ValidatorFn,
   Validators
 } from '@angular/forms';
 import {JsonPipe, NgForOf} from '@angular/common';
@@ -71,8 +71,6 @@ import {SummaryComponent} from './summary/summary.component';
       row-gap: 16px;
     }
 
-
-
   `],
   template: `
     <div class="container">
@@ -83,10 +81,11 @@ import {SummaryComponent} from './summary/summary.component';
               <hgroup slot="header">
                 <h1 class="heading">Register</h1>
               </hgroup>
-              <div slot="content" class="contact-form">
+              <div slot="content" class="contact-form" formGroupName="contact">
                 <fieldset class="fieldset">
                   <label class="label">Name</label>
                   <input
+                    formControlName="name"
                     class="input tab-text"
                     placeholder="enter your name"
                   >
@@ -94,13 +93,19 @@ import {SummaryComponent} from './summary/summary.component';
                 <fieldset class="fieldset">
                   <label class="label">Email</label>
                   <input
+                    formControlName="email"
                     class="input tab-text"
                     placeholder="example@gmail.com"
                   >
                 </fieldset>
               </div>
               <footer slot="footer">
-                <button class="button tab-text" (click)="next()">Continue</button>
+                <button
+                  class="button tab-text"
+                  [disabled]="contactGroup.invalid"
+                  [class.disabled]="contactGroup.invalid"
+                  (click)="next(contactGroup.valid)"
+                >Continue</button>
               </footer>
             </app-card>
 
@@ -161,8 +166,9 @@ import {SummaryComponent} from './summary/summary.component';
   `
 })
 export class StepperComponent {
-  step: number = 3;
+  step: number = 1;
   form: FormGroup;
+  contactGroup: FormGroup;
   topicsArray: string[] = [
     'Software Development',
     'User Experience',
@@ -174,13 +180,16 @@ export class StepperComponent {
   ) {
 
     this.form = builder.group({
-      name: ['Emily Johnson', [Validators.required]],
-      email: ['emily@emilyjohnsonstl.com', [Validators.required, Validators.email]],
+      contact: builder.group({
+        name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+      }, {validators: this.validateFormControls}),
       topics: builder.array(
-        this.topicsArray.map(topic => builder.control(topic.length > 14)),
+        this.topicsArray.map(topic => builder.control(false)),
         [this.atLeastOneSelectedValidator]
       ),
     });
+    this.contactGroup = this.form.get('contact') as FormGroup;
   }
 
   get topics(): FormArray {
@@ -188,11 +197,11 @@ export class StepperComponent {
   }
 
   get name(): string {
-    return (this.form.controls['name'] as FormControl).value;
+    return (this.form.get('contact.name') as FormControl).value;
   }
 
   get email(): string {
-    return (this.form.controls['email'] as FormControl).value;
+    return (this.form.get('contact.email') as FormControl).value;
   }
 
   get selectedTopics(): string[] {
@@ -205,11 +214,11 @@ export class StepperComponent {
     return selected;
   }
 
-  next() {
-    if (this.form.invalid) {
+  next(stepValid: boolean = false) {
+    if (stepValid || this.form.valid) {
+      this.step++;
       return;
     }
-    this.step++;
   }
 
   submit() {
@@ -221,4 +230,18 @@ export class StepperComponent {
     const selected = (formArray as FormArray).controls.some(control => control.value === true);
     return selected ? null : {noneSelected: true};
   }
+
+  validateFormControls: ValidatorFn = () => {
+    return (group: FormGroup): ValidationErrors | null => {
+      const controls = group.controls;
+      for (const key of Object.keys(controls)) {
+        const control: FormControl = controls[key] as FormControl;
+        if (control.invalid) {
+          return {'invalidGroup': true};
+        }
+      }
+      return null;
+    };
+  }
+
 }
