@@ -19,9 +19,6 @@ import {Component, ViewEncapsulation} from '@angular/core';
     }
 
     [slot=content] {
-      display: flex;
-      flex-direction: column;
-      row-gap: 35px;
     }
 
     [slot=footer] {
