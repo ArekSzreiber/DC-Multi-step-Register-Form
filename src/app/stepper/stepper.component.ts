@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import {JsonPipe, NgForOf} from '@angular/common';
 import {SummaryComponent} from './summary/summary.component';
+import {StepIndicatorComponent} from "../step-indicator/step-indicator.component";
 
 @Component({
   selector: 'app-stepper',
@@ -22,11 +23,13 @@ import {SummaryComponent} from './summary/summary.component';
     NgForOf,
     JsonPipe,
     FormsModule,
-    SummaryComponent
+    SummaryComponent,
+    StepIndicatorComponent
   ],
   styles: [`
     .container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
@@ -105,7 +108,8 @@ import {SummaryComponent} from './summary/summary.component';
                   [disabled]="contactGroup.invalid"
                   [class.disabled]="contactGroup.invalid"
                   (click)="next(contactGroup.valid)"
-                >Continue</button>
+                >Continue
+                </button>
               </footer>
             </app-card>
 
@@ -137,7 +141,8 @@ import {SummaryComponent} from './summary/summary.component';
                   class="button tab-text"
                   [class.disabled]="form.invalid"
                   (click)="next()"
-                >Continue</button>
+                >Continue
+                </button>
               </footer>
             </app-card>
 
@@ -158,15 +163,19 @@ import {SummaryComponent} from './summary/summary.component';
                 <button class="button" (click)="submit()">Confirm</button>
               </footer>
             </app-card>
-
           }
         }
       </form>
+      <app-step-indicator
+        [steps]="3"
+        [current]="step"
+        (selected)="selectStep($event)"
+      ></app-step-indicator>
     </div>
   `
 })
 export class StepperComponent {
-  step: number = 1;
+  step: number = 2;
   form: FormGroup;
   contactGroup: FormGroup;
   topicsArray: string[] = [
@@ -244,4 +253,9 @@ export class StepperComponent {
     };
   }
 
+  selectStep($event: number) {
+    if ($event < this.step) {
+      this.step = $event;
+    }
+  }
 }
