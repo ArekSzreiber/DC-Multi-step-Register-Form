@@ -141,8 +141,7 @@ import {StepIndicatorComponent} from "../step-indicator/step-indicator.component
                   class="button tab-text"
                   [class.disabled]="form.invalid"
                   (click)="next()"
-                >Continue
-                </button>
+                >Continue</button>
               </footer>
             </app-card>
 
@@ -175,7 +174,7 @@ import {StepIndicatorComponent} from "../step-indicator/step-indicator.component
   `
 })
 export class StepperComponent {
-  step: number = 2;
+  step: number = 1;
   form: FormGroup;
   contactGroup: FormGroup;
   topicsArray: string[] = [
@@ -231,10 +230,7 @@ export class StepperComponent {
   }
 
   submit() {
-    console.log(this.form.value);
-    console.log(this.form.controls['topics'].value);
   }
-
   private atLeastOneSelectedValidator = (formArray: AbstractControl): { [key: string]: any } | null => {
     const selected = (formArray as FormArray).controls.some(control => control.value === true);
     return selected ? null : {noneSelected: true};
@@ -258,4 +254,5 @@ export class StepperComponent {
       this.step = $event;
     }
   }
+
 }

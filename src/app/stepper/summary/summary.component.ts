@@ -68,6 +68,4 @@ export class SummaryComponent {
   @Input() name: string = '';
   @Input() email: string = '';
   @Input() topics: string[] = [];
-
-
 }
