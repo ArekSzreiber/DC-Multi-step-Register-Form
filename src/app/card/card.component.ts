@@ -11,6 +11,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
       border: 1px solid var(--border-color);
       width: 455px;
       padding: 40px;
+      box-sizing: border-box;
       border-radius: 15px;
     }
 

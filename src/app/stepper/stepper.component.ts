@@ -28,6 +28,7 @@ import {StepIndicatorComponent} from "../step-indicator/step-indicator.component
   ],
   styles: [`
     .container {
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -56,7 +57,6 @@ import {StepIndicatorComponent} from "../step-indicator/step-indicator.component
     }
 
     .disabled {
-      filter: grayscale(0.6);
       cursor: default;
     }
 

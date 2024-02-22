@@ -10,10 +10,12 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 
     :host {
-      margin-top: 12px;
-      display: flex;
+      align-content: center;
       align-items: center;
       column-gap: 30px;
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
     }
 
     .bullet {
@@ -48,10 +50,14 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
       color: var(--border-color);
     }
 
+    .flex-child {
+      flex: 85px 0 0;
+    }
+
   `],
   template: `
-    <span class="small-text">Step {{ current }} out of {{ steps }}</span>
-    <div class="bullets-container">
+    <span class="flex-child small-text">Step {{ current }} out of {{ steps }}</span>
+    <div class="bullets-container flex-child">
       @for (step of stepsArray; track step) {
         <div class="bullet-container" (click)="selected.emit(step)">
           <div
@@ -62,6 +68,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
         </div>
       }
     </div>
+    <div class="flex-child"></div>
   `
 })
 export class StepIndicatorComponent {
