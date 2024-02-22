@@ -26,7 +26,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
     .filled {
       background: var(--button-background-primary);
-
     }
 
     .active {
@@ -40,7 +39,9 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
     .bullet-container {
       padding: $size;
-      cursor: pointer;
+      &:has(.filled) {
+        cursor: pointer;
+      }
     }
 
     .small-text {
