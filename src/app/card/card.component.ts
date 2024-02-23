@@ -23,7 +23,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
     }
 
     [slot=footer] {
-      padding: 35px;
+      padding-top: 35px;
       display: flex;
       justify-content: center;
       align-items: center;
