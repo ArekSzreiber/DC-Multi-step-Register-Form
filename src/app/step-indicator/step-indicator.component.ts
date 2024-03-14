@@ -51,7 +51,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     }
 
     .flex-child {
-      flex: 85px 0 0;
+      flex: 86px 0 0;
     }
 
   `],
